@@ -1,0 +1,54 @@
+import mongoose from "mongoose";
+
+/**
+ * Availability sub-document
+ * day: 1 = Sunday ... 7 = Saturday
+ */
+const availabilitySchema = new mongoose.Schema(
+  {
+    day: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 7
+    },
+    startMinutes: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 1440
+    },
+    endMinutes: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 1440
+    }
+  },
+  { _id: false }
+);
+
+const instructorSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true
+    },
+    skills: {
+      type: [String],
+      required: true,
+      enum: ["freestyle", "breaststroke", "butterfly", "backstroke"]
+    },
+    availability: {
+      type: [availabilitySchema],
+      required: true
+    }
+  },
+  { timestamps: true }
+);
+
+const Instructor = mongoose.model("Instructor", instructorSchema);
+
+export default Instructor;
