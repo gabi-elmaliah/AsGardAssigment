@@ -12,6 +12,7 @@ const generateSlotsForWindow = (instructor, window, duration, type) => {
     slots.push({
       instructorId: instructor._id.toString(),
       instructorName: instructor.name,
+      skills: instructor.skills,   // ✅ ADD THIS
       day: window.day,
       startMinutes: start,
       endMinutes: start + duration,
@@ -21,6 +22,7 @@ const generateSlotsForWindow = (instructor, window, duration, type) => {
 
   return slots;
 };
+
 
 
  const generateSlotsForInstructor = (instructor) => {
