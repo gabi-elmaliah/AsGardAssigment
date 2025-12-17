@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 
-/**
- * Availability sub-document
- * day: 1 = Sunday ... 7 = Saturday
- */
 const availabilitySchema = new mongoose.Schema(
   {
     day: {

@@ -8,7 +8,12 @@
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed:instructors": "node backend/scripts/instructors.seed.js",
+    "seed:students": "node backend/scripts/students.seed.js"
+
+
+    
 
 
   },
