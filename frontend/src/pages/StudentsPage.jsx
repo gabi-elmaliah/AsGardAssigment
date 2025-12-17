@@ -13,59 +13,62 @@ import {
 } from "@mui/material";
 
 function StudentsPage() {
-  const [students, setStudents] = useState([]);
+    const [students, setStudents] = useState([]);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-  return (
+    return (
     <Box>
-      {/* Header */}
-      <Box
+        {/* Header */}
+        <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
         mb={3}
-      >
+        >
         <Typography variant="h4">Students</Typography>
         <Button variant="contained">Add Student</Button>
-      </Box>
+        </Box>
 
-      {/* Table */}
-      <TableContainer component={Paper}>
+        {/* Table */}
+        <TableContainer component={Paper}>
         <Table>
-          <TableHead>
+            <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Swimming Style</TableCell>
-              <TableCell>Lesson Preference</TableCell>
-              <TableCell align="right">Actions</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Swimming Style</TableCell>
+                <TableCell>Lesson Preference</TableCell>
+                <TableCell align="right">Actions</TableCell>
             </TableRow>
-          </TableHead>
+            </TableHead>
 
-          <TableBody>
+            <TableBody>
             {students.length === 0 ? (
-              <TableRow>
+                <TableRow>
                 <TableCell colSpan={4} align="center">
-                  No students added yet
+                    No students added yet
                 </TableCell>
-              </TableRow>
-            ) : (
-              students.map((student) => (
-                <TableRow key={student.id}>
-                  <TableCell>
-                    {student.firstName} {student.lastName}
-                  </TableCell>
-                  <TableCell>{student.style}</TableCell>
-                  <TableCell>{student.preference}</TableCell>
-                  <TableCell align="right">
-                    {/* Actions later */}
-                  </TableCell>
                 </TableRow>
-              ))
+            ) : (
+                students.map((student) => (
+                <TableRow key={student.id}>
+                    <TableCell>
+                    {student.firstName} {student.lastName}
+                    </TableCell>
+                    <TableCell>{student.style}</TableCell>
+                    <TableCell>{student.preference}</TableCell>
+                    <TableCell align="right">
+                    {/* Actions later */}
+                    </TableCell>
+                </TableRow>
+                ))
             )}
-          </TableBody>
+            </TableBody>
         </Table>
-      </TableContainer>
+        </TableContainer>
     </Box>
-  );
+    );
 }
 
 export default StudentsPage;

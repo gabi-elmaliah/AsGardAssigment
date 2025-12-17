@@ -1,6 +1,7 @@
 import connectDB from "./config/db.js";
 import express from "express";
 import dotenv from "dotenv";
+import studentsRoutes from './routes/studentsRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -13,6 +14,10 @@ app.use(express.json());
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK" });
 });
+
+app.use('/api/students', studentsRoutes);
+
+
 
 
 
