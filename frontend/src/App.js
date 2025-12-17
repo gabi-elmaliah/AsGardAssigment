@@ -1,9 +1,10 @@
-import React from 'react'
-import { CssBaseline, AppBar, Toolbar, Typography, Container, Box, Button } from "@mui/material";
+import React from "react";
+import { CssBaseline, AppBar, Toolbar, Typography, Container, Button } from "@mui/material";
+import { Link, Outlet } from "react-router-dom";
 
 const App = () => {
   return (
-      <>
+    <>
       <CssBaseline />
 
       <AppBar position="sticky">
@@ -12,24 +13,21 @@ const App = () => {
             Asgard Pool Scheduler
           </Typography>
 
-          <Button color="inherit">Students</Button>
-          <Button color="inherit">Schedule</Button>
+          <Button color="inherit" component={Link} to="/students">
+            Students
+          </Button>
+
+          <Button color="inherit" component={Link} to="/schedule">
+            Schedule
+          </Button>
         </Toolbar>
       </AppBar>
 
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Dashboard
-          </Typography>
-
-          <Typography variant="body1" color="text.secondary">
-            Add students, generate schedule, and view weekly gantt.
-          </Typography>
-        </Box>
+        <Outlet />
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

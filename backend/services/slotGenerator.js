@@ -1,4 +1,4 @@
-import { PRIVATE_DURATION, GROUP_DURATION, STEP} from "../config/constatns";
+import { PRIVATE_DURATION, GROUP_DURATION, STEP} from "../config/constants";
 
 
 const generateSlotsForWindow = (instructor, window, duration, type) => {
@@ -12,7 +12,7 @@ const generateSlotsForWindow = (instructor, window, duration, type) => {
     slots.push({
       instructorId: instructor._id.toString(),
       instructorName: instructor.name,
-      skills: instructor.skills,   // ✅ ADD THIS
+      skills: instructor.skills,   
       day: window.day,
       startMinutes: start,
       endMinutes: start + duration,
@@ -25,7 +25,7 @@ const generateSlotsForWindow = (instructor, window, duration, type) => {
 
 
 
- const generateSlotsForInstructor = (instructor) => {
+const generateSlotsForInstructor = (instructor) => {
   const slots = [];
 
   for (const window of instructor.availability) {
