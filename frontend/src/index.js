@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import DashboardPage from "./pages/DashboardPage";
 import StudentsPage from "./pages/StudentsPage";
 import SchedulePage from "./pages/SchedulePage";
+import EditStudentPage from "./pages/EditStudentPage";
 
 
 import {
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route index element={<DashboardPage />} />
       <Route path="students" element={<StudentsPage />} />
       <Route path="schedule" element={<SchedulePage />} />
+      <Route path="students/:id/edit" element={<EditStudentPage />} />
     </Route>
   )
 );
