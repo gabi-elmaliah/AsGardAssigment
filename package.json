@@ -11,15 +11,14 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "seed:instructors": "node backend/scripts/instructors.seed.js",
     "seed:students": "node backend/scripts/students.seed.js"
-
-
-    
-
-
   },
   "author": "Gabby Elmaliah",
   "license": "MIT",
   "dependencies": {
+    "@fullcalendar/core": "^6.1.19",
+    "@fullcalendar/daygrid": "^6.1.19",
+    "@fullcalendar/react": "^6.1.19",
+    "@fullcalendar/timegrid": "^6.1.19",
     "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
