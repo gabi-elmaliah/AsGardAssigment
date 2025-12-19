@@ -7,97 +7,102 @@ import {
 } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import dayGridPlugin from "@fullcalendar/daygrid";
-
-const today = new Date();
-
-const events = [
-  {
-    title: "Group Lesson",
-    start: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      9,
-      0
-    ),
-    end: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      10,
-      0
-    ),
-  },
-  {
-    title: "Private Lesson",
-    start: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      11,
-      0
-    ),
-    end: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      11,
-      45
-    ),
-  },
-];
+import { mockLessons } from "../data/mockLessons";
 
 
 
 function SchedulePage() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [events, setEvents] = useState([]);
 
-  const handleGenerateSchedule = () => {
-    // later: call backend
-    console.log("Generate schedule clicked");
-  };
+    const handleGenerateSchedule = () => {
+        const calendarEvents = mapLessonsToEvents(mockLessons);
+        setEvents(calendarEvents);
+    };
 
-  return (
-    <Box>
-      {/* Header */}
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={3}
-      >
-        <Typography variant="h4">
-          Weekly Schedule
-        </Typography>
+    const handleEventClick = (info) => {
+        const { instructor, students, type, style } = info.event.extendedProps;
 
-        <Button
-          variant="contained"
-          onClick={handleGenerateSchedule}
-          disabled={loading}
+        const instructorName = `${instructor.firstName} ${instructor.lastName}`;
+
+        const studentsNames = students
+            .map((s) => `${s.firstName} ${s.lastName}`)
+            .join(", ");
+
+        const message = `
+        Lesson Type: ${type}
+        Style: ${style}
+
+        Instructor:
+        ${instructorName}
+
+        Students:
+        ${studentsNames}
+        `;
+
+        alert(message);
+
+    };
+
+    const mapLessonsToEvents = (lessons) => {
+        return lessons.map((lesson) => ({
+            id: lesson.id,
+            title:
+            lesson.type === "group"
+                ? `Group ${lesson.style}`
+                : `Private ${lesson.style}`,
+            start: lesson.start,
+            end: lesson.end,
+            extendedProps: {
+            instructor: lesson.instructor,
+            students: lesson.students,
+            type: lesson.type,
+            style: lesson.style,
+            },
+        }));
+    };
+
+    return (
+        <Box>
+        {/* Header */}
+        <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={3}
         >
-          Generate Schedule
-        </Button>
-      </Box>
+            <Typography variant="h4">
+            Weekly Schedule
+            </Typography>
 
-      {/* Status */}
-      {error && (
-        <Typography color="error" mb={2}>
-          {error}
-        </Typography>
-      )}
+            <Button
+            variant="contained"
+            onClick={handleGenerateSchedule}
+            disabled={loading}
+            >
+            Generate Schedule
+            </Button>
+        </Box>
 
-    <Paper elevation={1}>
-        <FullCalendar
-            plugins={[timeGridPlugin, dayGridPlugin]}
-            initialView="timeGridWeek"
-            height={600}
-            events={events}
-        />
-    </Paper>
+        {/* Status */}
+        {error && (
+            <Typography color="error" mb={2}>
+            {error}
+            </Typography>
+        )}
 
-    </Box>
+        <Paper elevation={1}>
+            <FullCalendar
+                plugins={[timeGridPlugin]}
+                initialView="timeGridWeek"
+                height={600}
+                eventClick={handleEventClick}
+                events={events}
+            />
+        </Paper>
+
+        </Box>
   );
 }
 
