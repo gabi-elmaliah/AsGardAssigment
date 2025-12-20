@@ -30,6 +30,7 @@ function SchedulePage() {
       const calendarEvents = mapLessonsToEvents(lessons);
 
       setEvents(calendarEvents);
+      console.log(`total number of lessons scheduled: ${lessons.length}`);
 
       setConflicts(conflicts || []);
 
@@ -99,6 +100,15 @@ function SchedulePage() {
         <Typography variant="h4">Weekly Schedule</Typography>
 
         <Button
+          variant="outlined"
+          color="error"
+          disabled={conflicts.length === 0}
+          onClick={() => setShowConflicts(true)}
+        >
+          View Conflicts ({conflicts.length})
+        </Button>
+
+        <Button
           variant="contained"
           onClick={handleGenerateSchedule}
           disabled={loading}
@@ -138,7 +148,7 @@ function SchedulePage() {
 
         <DialogContent dividers>
           {conflicts.length === 0 ? (
-            <Typography>No conflicts 🎉</Typography>
+            <Typography>No conflicts </Typography>
           ) : (
             <List>
               {conflicts.map((conflict, index) => (

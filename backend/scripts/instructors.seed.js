@@ -19,24 +19,24 @@ const seedInstructors = async () => {
           { day: 4, startMinutes: 960, endMinutes: 1200 },
         ],
       },
-      // {
-      //   name: "Yoni",
-      //   skills: ["breaststroke", "butterfly"],
-      //   availability: [
-      //     { day: 2, startMinutes: 480, endMinutes: 900 },
-      //     { day: 3, startMinutes: 480, endMinutes: 900 },
-      //     { day: 4, startMinutes: 480, endMinutes: 900 }
-      //   ]
-      // },
-      // {
-      //   name: "Jony",
-      //   skills: ["freestyle", "breaststroke", "butterfly", "backstroke"],
-      //   availability: [
-      //     { day: 0, startMinutes: 600, endMinutes: 1140 },
-      //     { day: 2, startMinutes: 600, endMinutes: 1140 },
-      //     { day: 4, startMinutes: 600, endMinutes: 1140 }
-      //   ]
-      // }
+      {
+        name: "Yoni",
+        skills: ["breaststroke", "butterfly"],
+        availability: [
+          { day: 2, startMinutes: 480, endMinutes: 900 },
+          { day: 3, startMinutes: 480, endMinutes: 900 },
+          { day: 4, startMinutes: 480, endMinutes: 900 },
+        ],
+      },
+      {
+        name: "Jony",
+        skills: ["freestyle", "breaststroke", "butterfly", "backstroke"],
+        availability: [
+          { day: 0, startMinutes: 600, endMinutes: 1140 },
+          { day: 2, startMinutes: 600, endMinutes: 1140 },
+          { day: 4, startMinutes: 600, endMinutes: 1140 },
+        ],
+      },
     ];
 
     await Instructor.insertMany(instructors);

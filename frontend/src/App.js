@@ -1,11 +1,21 @@
 import React from "react";
-import { CssBaseline, AppBar, Toolbar, Typography, Container, Button } from "@mui/material";
+import {
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Button,
+} from "@mui/material";
 import { Link, Outlet } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <>
       <CssBaseline />
+
+      <ToastContainer position="bottom-right" autoClose={4000} />
 
       <AppBar position="sticky">
         <Toolbar>

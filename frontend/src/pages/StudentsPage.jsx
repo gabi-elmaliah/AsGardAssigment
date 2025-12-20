@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddStudentDialog from "../components/AddStudentDialog";
+import { toast } from "react-toastify";
 import {
   Box,
   Typography,
@@ -28,7 +29,6 @@ function StudentsPage() {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -38,7 +38,7 @@ function StudentsPage() {
         const data = await fetchStudents();
         setStudents(data);
       } catch (err) {
-        setError(err.message);
+        toast.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -60,8 +60,9 @@ function StudentsPage() {
     try {
       await deleteStudent(student._id);
       setStudents((prev) => prev.filter((s) => s._id !== student._id));
+      toast.success("Student deleted");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -72,9 +73,10 @@ function StudentsPage() {
       const createdStudent = await createStudent(form);
 
       setStudents((prev) => [createdStudent, ...prev]);
+      toast.success("Student created");
       setOpen(false);
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     } finally {
       setSaving(false);
     }
@@ -88,80 +90,77 @@ function StudentsPage() {
         </Box>
       )}
 
-      {error && <Typography color="error">{error}</Typography>}
-
-      {!loading && !error && (
-        <Box>
-          {/* Header */}
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={3}
-          >
-            <Box>
-              <Typography variant="h4">Students</Typography>
-              <Typography variant="body2" color="text.secondary">
-                Total students: {students.length}
-              </Typography>
-            </Box>
-
-            <Button variant="contained" onClick={() => setOpen(true)}>
-              Add Student
-            </Button>
+      <Box>
+        {/* Header */}
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={3}
+        >
+          <Box>
+            <Typography variant="h4">Students</Typography>
+            <Typography variant="body2" color="text.secondary">
+              Total students: {students.length}
+            </Typography>
           </Box>
 
-          {/* Table */}
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Swimming Style</TableCell>
-                  <TableCell>Lesson Preference</TableCell>
-                  <TableCell align="right">Actions</TableCell>
-                </TableRow>
-              </TableHead>
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            Add Student
+          </Button>
+        </Box>
 
-              <TableBody>
-                {students.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No students added yet
+        {/* Table */}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Swimming Style</TableCell>
+                <TableCell>Lesson Preference</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {students.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No students added yet
+                  </TableCell>
+                </TableRow>
+              ) : (
+                students.map((student) => (
+                  <TableRow key={student._id}>
+                    <TableCell>
+                      {student.firstName} {student.lastName}
+                    </TableCell>
+                    <TableCell>{student.style}</TableCell>
+                    <TableCell>{student.preference}</TableCell>
+
+                    <TableCell align="right">
+                      <IconButton
+                        aria-label="edit student"
+                        onClick={() => handleEditClick(student)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+
+                      <IconButton
+                        aria-label="delete student"
+                        onClick={() => handleDeleteClick(student)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
-                ) : (
-                  students.map((student) => (
-                    <TableRow key={student._id}>
-                      <TableCell>
-                        {student.firstName} {student.lastName}
-                      </TableCell>
-                      <TableCell>{student.style}</TableCell>
-                      <TableCell>{student.preference}</TableCell>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
 
-                      <TableCell align="right">
-                        <IconButton
-                          aria-label="edit student"
-                          onClick={() => handleEditClick(student)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-
-                        <IconButton
-                          aria-label="delete student"
-                          onClick={() => handleDeleteClick(student)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      )}
       <AddStudentDialog
         open={open}
         onClose={() => setOpen(false)}

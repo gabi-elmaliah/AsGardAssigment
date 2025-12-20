@@ -1,0 +1,7 @@
+
+left overs:
+
+do we add dashboard
+do we create a database for lessons
+
+add nice error message in students page
