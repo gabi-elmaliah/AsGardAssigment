@@ -21,6 +21,19 @@ const studentCanTakeSlot = (student, slot) => {
   return true;
 };
 
+const hasPoolConflict = (slot, lessons) => {
+  return lessons.some((lesson) => {
+    if (lesson.day !== slot.day) return false;
+
+    return overlaps(
+      lesson.startMinutes,
+      lesson.endMinutes,
+      slot.startMinutes,
+      slot.endMinutes
+    );
+  });
+};
+
 const findJoinableGroupLesson = (student, lessons) => {
   if (student.preference === "private_only") return null;
 
@@ -54,6 +67,8 @@ const instructorHasConflict = (lessons, slot) => {
 const canCreateLessonInSlot = (student, slot, lessons) => {
   if (!studentCanTakeSlot(student, slot)) return false;
   if (instructorHasConflict(lessons, slot)) return false;
+  if (hasPoolConflict(slot, lessons)) return false;
+
   return true;
 };
 

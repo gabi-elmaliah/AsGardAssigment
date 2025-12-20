@@ -4,7 +4,7 @@
 //     firstName: "Noam",
 //     lastName: "Levi",
 //     style: "freestyle",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Tom",
@@ -22,13 +22,13 @@
 //     firstName: "Amit",
 //     lastName: "Peretz",
 //     style: "freestyle",
-//     preference: "prefer_private",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Yonatan",
 //     lastName: "Katz",
 //     style: "freestyle",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 
 //   // Breaststroke
@@ -42,13 +42,13 @@
 //     firstName: "Shira",
 //     lastName: "Levin",
 //     style: "breaststroke",
-//     preference: "prefer_private",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Yael",
 //     lastName: "Mizrahi",
 //     style: "breaststroke",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Itay",
@@ -74,7 +74,7 @@
 //     firstName: "Gal",
 //     lastName: "Mor",
 //     style: "butterfly",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Ofir",
@@ -86,13 +86,13 @@
 //     firstName: "Omer",
 //     lastName: "Zamir",
 //     style: "butterfly",
-//     preference: "prefer_private",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Niv",
 //     lastName: "Rotem",
 //     style: "butterfly",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 
 //   // Backstroke
@@ -100,7 +100,7 @@
 //     firstName: "Maya",
 //     lastName: "Rosen",
 //     style: "backstroke",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Tal",
@@ -118,13 +118,13 @@
 //     firstName: "Idan",
 //     lastName: "Sharabi",
 //     style: "backstroke",
-//     preference: "prefer_private",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Yarden",
 //     lastName: "Amar",
 //     style: "backstroke",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 
 //   // Mixed extras
@@ -138,7 +138,7 @@
 //     firstName: "Noa",
 //     lastName: "Koren",
 //     style: "breaststroke",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Erez",
@@ -150,13 +150,13 @@
 //     firstName: "Sivan",
 //     lastName: "Azulai",
 //     style: "butterfly",
-//     preference: "prefer_private",
+//     preference: "private/group",
 //   },
 //   {
 //     firstName: "Daniel",
 //     lastName: "Shalom",
 //     style: "freestyle",
-//     preference: "prefer_group",
+//     preference: "private/group",
 //   },
 // ];
 
@@ -319,6 +319,37 @@ const students = [
   {
     firstName: "Daniel",
     lastName: "Shalom",
+    style: "freestyle",
+    preference: "private_only",
+  },
+
+  {
+    firstName: "Lina",
+    lastName: "BenAmi",
+    style: "freestyle",
+    preference: "private_only",
+  },
+  {
+    firstName: "Oded",
+    lastName: "Harari",
+    style: "breaststroke",
+    preference: "private_only",
+  },
+  {
+    firstName: "Keren",
+    lastName: "Avital",
+    style: "backstroke",
+    preference: "private_only",
+  },
+  {
+    firstName: "Ron",
+    lastName: "Eldar",
+    style: "butterfly",
+    preference: "private_only",
+  },
+  {
+    firstName: "Michal",
+    lastName: "Tzur",
     style: "freestyle",
     preference: "private_only",
   },

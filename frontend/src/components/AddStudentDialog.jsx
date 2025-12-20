@@ -86,8 +86,7 @@ function AddStudentDialog({ open, onClose, onSubmit, saving }) {
         >
           <MenuItem value="private_only">Private Only</MenuItem>
           <MenuItem value="group_only">Group Only</MenuItem>
-          <MenuItem value="prefer_private">Prefer Private</MenuItem>
-          <MenuItem value="prefer_group">Prefer Group</MenuItem>
+          <MenuItem value="private/group">Private or Group</MenuItem>
         </TextField>
       </DialogContent>
 

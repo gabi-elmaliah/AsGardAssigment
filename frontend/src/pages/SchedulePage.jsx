@@ -15,9 +15,10 @@ function SchedulePage() {
     setError(null);
 
     try {
-      const lessons = await generateSchedule(weekStart);
+      const { lessons, conflicts } = await generateSchedule(weekStart);
       const calendarEvents = mapLessonsToEvents(lessons);
 
+      console.log("Conflicts:", conflicts);
       setEvents(calendarEvents);
     } catch (err) {
       setError(err.message);
