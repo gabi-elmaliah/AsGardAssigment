@@ -68,8 +68,6 @@ const createStudent = async (req, res) => {
  */
 const updateStudent = async (req, res) => {
   try {
-    console.log("BODY:", req.body);
-
     const student = await Student.findById(req.params.id);
 
     if (!student) {

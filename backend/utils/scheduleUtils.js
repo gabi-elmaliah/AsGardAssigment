@@ -73,21 +73,18 @@ const canCreateLessonInSlot = (student, slot, lessons) => {
 };
 
 const getSlotsByPreference = (student, slots) => {
-  if (student.preference === "prefer_private") {
-    return [
-      ...slots.filter((s) => s.type === "private"),
-      ...slots.filter((s) => s.type === "group"),
-    ];
+  if (student.preference === "private") {
+    return slots.filter((s) => s.type === "private");
   }
 
-  if (student.preference === "prefer_group") {
-    return [
-      ...slots.filter((s) => s.type === "group"),
-      ...slots.filter((s) => s.type === "private"),
-    ];
+  if (student.preference === "group") {
+    return slots.filter((s) => s.type === "group");
   }
 
-  return slots;
+  return [
+    ...slots.filter((s) => s.type === "private"),
+    ...slots.filter((s) => s.type === "group"),
+  ];
 };
 
 export {

@@ -118,8 +118,7 @@ function EditStudentPage() {
         >
           <MenuItem value="private_only">Private Only</MenuItem>
           <MenuItem value="group_only">Group Only</MenuItem>
-          <MenuItem value="private/group">Prefer Private</MenuItem>
-          <MenuItem value="">Prefer Group</MenuItem>
+          <MenuItem value="private/group">Private/Group</MenuItem>
         </TextField>
 
         <Box mt={3} display="flex" gap={2}>
