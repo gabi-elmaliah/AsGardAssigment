@@ -1,5 +1,5 @@
 import Student from "../models/Student.js";
-
+import { MAX_STUDENTS } from "../config/constants.js";
 
 const getStudents = async (req, res) => {
   try {
@@ -39,6 +39,13 @@ const createStudent = async (req, res) => {
 
     if (!firstName || !lastName || !style || !preference) {
       return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const studentCount = await Student.countDocuments();
+    if (studentCount >= MAX_STUDENTS) {
+      return res
+        .status(400)
+        .json({ message: "Student limit reached. Cannot add more students." });
     }
 
     const student = await Student.create({
@@ -101,11 +108,10 @@ const deleteStudent = async (req, res) => {
   }
 };
 
-export { getStudents, getStudentById, createStudent, updateStudent, deleteStudent };
-
-
-
-
-
-
-
+export {
+  getStudents,
+  getStudentById,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+};

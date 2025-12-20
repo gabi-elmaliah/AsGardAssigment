@@ -4,29 +4,17 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { generateSchedule } from "../services/scheduleService";
 
-const getSundayOfCurrentWeek = () => {
-  const today = new Date();
-  const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ...
-
-  const sunday = new Date(today);
-  sunday.setDate(today.getDate() - dayOfWeek);
-  sunday.setHours(0, 0, 0, 0);
-
-  return sunday.toISOString();
-};
-
 function SchedulePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [events, setEvents] = useState([]);
+  const [weekStart, setWeekStart] = useState(null);
 
   const handleGenerateSchedule = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const weekStart = getSundayOfCurrentWeek();
-
       const lessons = await generateSchedule(weekStart);
       const calendarEvents = mapLessonsToEvents(lessons);
 
@@ -112,6 +100,11 @@ function SchedulePage() {
           initialView="timeGridWeek"
           height={600}
           eventClick={handleEventClick}
+          datesSet={(info) => {
+            // info.start is Sunday 00:00
+            setWeekStart(info.start.toISOString());
+            console.log("Week start set to:", info.start.toISOString());
+          }}
           events={events}
         />
       </Paper>
