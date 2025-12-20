@@ -3,12 +3,23 @@ import { Box, Typography, Button, Paper } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { generateSchedule } from "../services/scheduleService";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 
 function SchedulePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [events, setEvents] = useState([]);
   const [weekStart, setWeekStart] = useState(null);
+  const [conflicts, setConflicts] = useState([]);
+  const [showConflicts, setShowConflicts] = useState(false);
 
   const handleGenerateSchedule = async () => {
     setLoading(true);
@@ -18,8 +29,16 @@ function SchedulePage() {
       const { lessons, conflicts } = await generateSchedule(weekStart);
       const calendarEvents = mapLessonsToEvents(lessons);
 
-      console.log("Conflicts:", conflicts);
       setEvents(calendarEvents);
+
+      setConflicts(conflicts || []);
+
+      // STEP 1: decide if popup should open
+      if (conflicts && conflicts.length > 0) {
+        setShowConflicts(true);
+      } else {
+        setShowConflicts(false);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -109,6 +128,47 @@ function SchedulePage() {
           events={events}
         />
       </Paper>
+      <Dialog
+        open={showConflicts}
+        onClose={() => setShowConflicts(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Scheduling Conflicts</DialogTitle>
+
+        <DialogContent dividers>
+          {conflicts.length === 0 ? (
+            <Typography>No conflicts 🎉</Typography>
+          ) : (
+            <List>
+              {conflicts.map((conflict, index) => (
+                <ListItem key={index} alignItems="flex-start">
+                  <ListItemText
+                    primary={conflict.type}
+                    secondary={
+                      <>
+                        <Typography variant="body2">
+                          {conflict.message}
+                        </Typography>
+                        {conflict.student && (
+                          <Typography variant="caption" color="text.secondary">
+                            Student: {conflict.student.firstName}{" "}
+                            {conflict.student.lastName}
+                          </Typography>
+                        )}
+                      </>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          )}
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={() => setShowConflicts(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
