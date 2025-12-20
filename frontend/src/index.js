@@ -1,13 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import DashboardPage from "./pages/DashboardPage";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import StudentsPage from "./pages/StudentsPage";
 import SchedulePage from "./pages/SchedulePage";
 import EditStudentPage from "./pages/EditStudentPage";
-
 
 import {
   createBrowserRouter,
@@ -16,12 +14,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route index element={<DashboardPage />} />
-      <Route path="students" element={<StudentsPage />} />
+      <Route index element={<StudentsPage />} />
+      <Route index path="students" element={<StudentsPage />} />
       <Route path="schedule" element={<SchedulePage />} />
       <Route path="students/:id/edit" element={<EditStudentPage />} />
     </Route>

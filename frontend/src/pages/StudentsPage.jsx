@@ -69,7 +69,6 @@ function StudentsPage() {
   const handleCreateStudent = async (form) => {
     try {
       setSaving(true);
-
       const createdStudent = await createStudent(form);
 
       setStudents((prev) => [createdStudent, ...prev]);
