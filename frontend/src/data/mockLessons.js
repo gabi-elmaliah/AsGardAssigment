@@ -8,9 +8,9 @@ export const mockLessons = [
     id: "lesson1",
     type: "group",
     style: "freestyle",
-    instructor: { id: "i1", firstName: "Dan", lastName: "Levi" },
+    instructor: { id: "i1", name: "Yotam"},
     students: [
-      { id: "s1", firstName: "Noam", lastName: "Cohen" },
+      { id: "s1", name: "Noam", lastName: "Cohen" },
       { id: "s2", firstName: "Maya", lastName: "Rosen" },
       { id: "s3", firstName: "Itay", lastName: "Bitan" },
     ],
@@ -21,7 +21,7 @@ export const mockLessons = [
     id: "lesson2",
     type: "private",
     style: "butterfly",
-    instructor: { id: "i2", firstName: "Sharon", lastName: "Aviv" },
+    instructor: { id: "i2", name: "Yoni" },
     students: [
       { id: "s4", firstName: "Dina", lastName: "Katz" },
     ],

@@ -2,6 +2,7 @@ import connectDB from "./config/db.js";
 import express from "express";
 import dotenv from "dotenv";
 import studentsRoutes from './routes/studentsRoutes.js';
+import scheduleRoutes from "./routes/scheduleRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -16,6 +17,7 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use('/api/students', studentsRoutes);
+app.use("/api/schedule", scheduleRoutes);
 
 
 

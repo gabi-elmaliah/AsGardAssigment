@@ -38,7 +38,7 @@ export async function deleteStudent(id) {
 }
 
 export async function updateStudent(id, updatedStudent) {
-  const res = await fetch(`/api/students/${id}`, {
+  const res = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

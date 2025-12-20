@@ -1,36 +1,53 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Paper,
-} from "@mui/material";
+import { Box, Typography, Button, Paper } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { mockLessons } from "../data/mockLessons";
+import { generateSchedule } from "../services/scheduleService";
 
+const getSundayOfCurrentWeek = () => {
+  const today = new Date();
+  const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ...
 
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - dayOfWeek);
+  sunday.setHours(0, 0, 0, 0);
+
+  return sunday.toISOString();
+};
 
 function SchedulePage() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [events, setEvents] = useState([]);
 
-    const handleGenerateSchedule = () => {
-        const calendarEvents = mapLessonsToEvents(mockLessons);
-        setEvents(calendarEvents);
-    };
+  const handleGenerateSchedule = async () => {
+    setLoading(true);
+    setError(null);
 
-    const handleEventClick = (info) => {
-        const { instructor, students, type, style } = info.event.extendedProps;
+    try {
+      const weekStart = getSundayOfCurrentWeek();
 
-        const instructorName = `${instructor.firstName} ${instructor.lastName}`;
+      const lessons = await generateSchedule(weekStart);
+      const calendarEvents = mapLessonsToEvents(lessons);
 
-        const studentsNames = students
-            .map((s) => `${s.firstName} ${s.lastName}`)
-            .join(", ");
+      setEvents(calendarEvents);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const message = `
+  const handleEventClick = (info) => {
+    const { instructor, students, type, style } = info.event.extendedProps;
+
+    const instructorName = `${instructor.name}`;
+
+    const studentsNames = students
+      .map((s) => `${s.firstName} ${s.lastName}`)
+      .join(", ");
+
+    const message = `
         Lesson Type: ${type}
         Style: ${style}
 
@@ -41,70 +58,65 @@ function SchedulePage() {
         ${studentsNames}
         `;
 
-        alert(message);
+    alert(message);
+  };
 
-    };
+  const mapLessonsToEvents = (lessons) => {
+    return lessons.map((lesson) => ({
+      id: lesson.id,
+      title:
+        lesson.type === "group"
+          ? `Group ${lesson.style}`
+          : `Private ${lesson.style}`,
+      start: lesson.start,
+      end: lesson.end,
+      extendedProps: {
+        instructor: lesson.instructor,
+        students: lesson.students,
+        type: lesson.type,
+        style: lesson.style,
+      },
+    }));
+  };
 
-    const mapLessonsToEvents = (lessons) => {
-        return lessons.map((lesson) => ({
-            id: lesson.id,
-            title:
-            lesson.type === "group"
-                ? `Group ${lesson.style}`
-                : `Private ${lesson.style}`,
-            start: lesson.start,
-            end: lesson.end,
-            extendedProps: {
-            instructor: lesson.instructor,
-            students: lesson.students,
-            type: lesson.type,
-            style: lesson.style,
-            },
-        }));
-    };
+  return (
+    <Box>
+      {/* Header */}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
+        <Typography variant="h4">Weekly Schedule</Typography>
 
-    return (
-        <Box>
-        {/* Header */}
-        <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={3}
+        <Button
+          variant="contained"
+          onClick={handleGenerateSchedule}
+          disabled={loading}
         >
-            <Typography variant="h4">
-            Weekly Schedule
-            </Typography>
+          Generate Schedule
+        </Button>
+      </Box>
 
-            <Button
-            variant="contained"
-            onClick={handleGenerateSchedule}
-            disabled={loading}
-            >
-            Generate Schedule
-            </Button>
-        </Box>
+      {/* Status */}
+      {error && (
+        <Typography color="error" mb={2}>
+          {error}
+        </Typography>
+      )}
 
-        {/* Status */}
-        {error && (
-            <Typography color="error" mb={2}>
-            {error}
-            </Typography>
-        )}
-
-        <Paper elevation={1}>
-            <FullCalendar
-                plugins={[timeGridPlugin]}
-                initialView="timeGridWeek"
-                height={600}
-                eventClick={handleEventClick}
-                events={events}
-            />
-        </Paper>
-
-        </Box>
+      <Paper elevation={1}>
+        <FullCalendar
+          plugins={[timeGridPlugin]}
+          initialView="timeGridWeek"
+          height={600}
+          eventClick={handleEventClick}
+          events={events}
+        />
+      </Paper>
+    </Box>
   );
 }
 
 export default SchedulePage;
-

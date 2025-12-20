@@ -1,5 +1,4 @@
-import { PRIVATE_DURATION, GROUP_DURATION, STEP} from "../config/constants";
-
+import { PRIVATE_DURATION, GROUP_DURATION, STEP } from "../config/constants.js";
 
 const generateSlotsForWindow = (instructor, window, duration, type) => {
   const slots = [];
@@ -12,18 +11,15 @@ const generateSlotsForWindow = (instructor, window, duration, type) => {
     slots.push({
       instructorId: instructor._id.toString(),
       instructorName: instructor.name,
-      skills: instructor.skills,   
+      skills: instructor.skills,
       day: window.day,
       startMinutes: start,
       endMinutes: start + duration,
-      type
+      type,
     });
   }
-
   return slots;
 };
-
-
 
 const generateSlotsForInstructor = (instructor) => {
   const slots = [];
@@ -41,5 +37,3 @@ const generateSlotsForInstructor = (instructor) => {
 };
 
 export default generateSlotsForInstructor;
-
-
