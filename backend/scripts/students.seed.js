@@ -11,7 +11,6 @@ const seedStudents = async () => {
 
     await Student.deleteMany();
 
-
     await Student.insertMany(students);
 
     console.log("students seeded");

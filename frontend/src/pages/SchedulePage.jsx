@@ -30,7 +30,6 @@ function SchedulePage() {
       const calendarEvents = mapLessonsToEvents(lessons);
 
       setEvents(calendarEvents);
-      console.log(`total number of lessons scheduled: ${lessons.length}`);
 
       setConflicts(conflicts || []);
 
